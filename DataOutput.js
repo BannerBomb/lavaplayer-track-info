@@ -32,8 +32,8 @@ module.exports = class DataOutput {
     }
 
     writeLong(value) {
-        const msb = value / BigInt(2**32);
-        const lsb = value % BigInt(2**32);
+        const msb = (typeof value === 'bigint' ? value : BigInt(value)) / BigInt(2**32);
+        const lsb = (typeof value === 'bigint' ? value : BigInt(value)) % BigInt(2**32);
         this.buf.writeInt32BE(Number(msb), this._advance(4));
         this.buf.writeInt32BE(Number(lsb), this._advance(4));
     }
